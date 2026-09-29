@@ -1,0 +1,12 @@
+# NEU-DET Steel Surface Defect Detection
+# 6 classes of steel surface defects
+# Dataset: NEU Surface Defect Database (Kaggle: kaustubhdikshit/neu-surface-defect-database)
+# License: CC BY 4.0 (Attribution)
+
+path: /home/arihant/neu-defect-detection/data
+train: train/images
+val: validation/images
+test: test/images
+
+nc: 6
+names: ['crazing', 'inclusion', 'patches', 'pitted_surface', 'rolled-in_scale', 'scratches']

@@ -1,0 +1,60 @@
+{
+  "model": "models/neu_defect_run/weights/best.pt",
+  "dataset": "/home/arihant/neu-defect-detection/data/data.yaml",
+  "mAP@0.5": 0.6688222915201866,
+  "mAP@0.5:0.95": 0.384851372984158,
+  "precision": 0.6383095508829405,
+  "recall": 0.6225109686795672,
+  "per_class": [
+    {
+      "class": "crazing",
+      "precision": 0.5892857142857143,
+      "recall": 1.0,
+      "map50": 0,
+      "map50_95": 0
+    },
+    {
+      "class": "inclusion",
+      "precision": 0.668918918918919,
+      "recall": 1.0,
+      "map50": 0,
+      "map50_95": 0
+    },
+    {
+      "class": "patches",
+      "precision": 0.8177339901477833,
+      "recall": 1.0,
+      "map50": 0,
+      "map50_95": 0
+    },
+    {
+      "class": "pitted_surface",
+      "precision": 0.7261904761904762,
+      "recall": 1.0,
+      "map50": 0,
+      "map50_95": 0
+    },
+    {
+      "class": "rolled-in_scale",
+      "precision": 0.5179856115107914,
+      "recall": 1.0,
+      "map50": 0,
+      "map50_95": 0
+    },
+    {
+      "class": "scratches",
+      "precision": 0.6444444444444445,
+      "recall": 1.0,
+      "map50": 0,
+      "map50_95": 0
+    }
+  ],
+  "inference_speed": {
+    "batch_1": {
+      "avg_ms": 8.886988957722982,
+      "fps": 112.52405114456441
+    }
+  },
+  "validation_time_s": 6.364161014556885,
+  "model_size_mb": 5.390142
+}
