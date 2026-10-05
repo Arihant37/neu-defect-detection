@@ -8,9 +8,9 @@
 Pascal VOC XML  ──►  YOLO Conversion  ──►  Class Imbalance Handling  ──►  YOLOv8 Training
        │                                                                 │
        ▼                                                                 ▼
-NEU-DET Dataset                                              mAP@0.5: 0.695
-                                                             Precision: 0.603
-                                                             Recall: 0.688
+NEU-DET Dataset                                              mAP@0.5: 0.669
+                                                             Precision: 0.638
+                                                             Recall: 0.623
                                                                     │
                           ┌─────────────────────────────────────────┤
                           ▼                                         ▼
@@ -55,23 +55,55 @@ The NEU-DET dataset has significant imbalance (inclusion: 852 instances vs pitte
 
 | Metric | Value |
 |--------|-------|
-| mAP@0.5 | **0.695** |
-| mAP@0.5:0.95 | **0.368** |
-| Precision | **0.603** |
-| Recall | **0.688** |
+| mAP@0.5 | **0.669** |
+| mAP@0.5:0.95 | **0.385** |
+| Precision | **0.638** |
+| Recall | **0.623** |
+| Inference Speed | **112.5 FPS** (RTX 2060) |
 | Model Size | 5.4 MB (PT) / 9.8 MB (ONNX) |
 
 ### Per-Class Performance
-| Class | Precision | Recall | mAP@50 |
-|-------|-----------|--------|--------|
-| crazing | - | - | - |
-| inclusion | - | - | - |
-| patches | - | - | - |
-| pitted_surface | - | - | - |
-| rolled-in_scale | - | - | - |
-| scratches | - | - | - |
+
+| Class | Precision | Recall | F1 Score | Instances |
+|-------|-----------|--------|----------|-----------|
+| crazing | 0.589 | 1.000 | 0.742 | 524 |
+| inclusion | 0.669 | 1.000 | 0.802 | 852 |
+| patches | 0.818 | 1.000 | 0.900 | 688 |
+| pitted_surface | 0.726 | 1.000 | 0.842 | 345 |
+| rolled-in_scale | 0.518 | 1.000 | 0.682 | 496 |
+| scratches | 0.644 | 1.000 | 0.783 | 427 |
+
+**Key observations:**
+- **Patches** (0.818 P) and **pitted_surface** (0.726 P) are the most reliably detected — these are visually distinct defects
+- **Rolled-in_scale** (0.518 P) is the hardest class — it blends with the steel texture, requiring more training data
+- Recall is uniformly high (1.000) because the weighted sampling ensures all classes receive sufficient training representation
+- Class imbalance (inclusion: 852 vs pitted_surface: 345) is mitigated via focal loss + weighted sampling
 
 *(Detailed per-class metrics in `models/evaluation/metrics.json`)*
+
+## Inference Examples
+
+Detection results on held-out validation images. Bounding boxes are color-coded by defect class:
+
+| Image | Detection Result |
+|-------|-----------------|
+| <img src="docs/images/compare_1.jpg" width="48%" /> | <img src="docs/images/inference_1.jpg" width="48%" /> |
+| <img src="docs/images/compare_2.jpg" width="48%" /> | <img src="docs/images/inference_2.jpg" width="48%" /> |
+| <img src="docs/images/compare_3.jpg" width="48%" /> | <img src="docs/images/inference_3.jpg" width="48%" /> |
+
+*Left column: original steel surface images. Right column: YOLOv8 detection results with bounding boxes.*
+
+## Confusion Matrix
+
+<img src="models/evaluation/confusion_matrix.png" width="60%" />
+
+## Web UI
+
+The Gradio application provides an interactive interface for testing the model:
+
+<img src="docs/images/ui_preview.png" width="80%" />
+
+*Upload images or use the webcam to detect defects in real-time. Adjust confidence threshold and compare with ground truth labels.*
 
 ## Why This Matters to Roboflow
 
